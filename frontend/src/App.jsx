@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-const API_URL = "http://localhost:5000/api/coffees";
-
+const API_URL = "https://coffee-rating-app-3z03.onrender.com/api/coffees";
 function App() {
   const [coffees, setCoffees] = useState([]);
   const [loading, setLoading] = useState(true);
