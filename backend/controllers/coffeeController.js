@@ -1,9 +1,26 @@
-const Coffee = require("../models/Coffee");
+const fs = require("fs");
+const path = require("path");
+
+const DATA_FILE = path.join(__dirname, "../data/coffee.json");
+
+// Read coffee data
+function readCoffees() {
+  const data = fs.readFileSync(DATA_FILE, "utf-8");
+  return JSON.parse(data);
+}
+
+// Write coffee data
+function writeCoffees(coffees) {
+  fs.writeFileSync(
+    DATA_FILE,
+    JSON.stringify(coffees, null, 2)
+  );
+}
 
 // Get all coffees
-const getCoffees = async (req, res) => {
+const getCoffees = (req, res) => {
   try {
-    const coffees = await Coffee.find().sort({ id: 1 });
+    const coffees = readCoffees();
 
     res.json(coffees);
   } catch (error) {
@@ -14,11 +31,13 @@ const getCoffees = async (req, res) => {
 };
 
 // Get one coffee
-const getCoffeeById = async (req, res) => {
+const getCoffeeById = (req, res) => {
   try {
-    const coffee = await Coffee.findOne({
-      id: Number(req.params.id),
-    });
+    const coffees = readCoffees();
+
+    const coffee = coffees.find(
+      (item) => item.id === Number(req.params.id)
+    );
 
     if (!coffee) {
       return res.status(404).json({
@@ -35,23 +54,27 @@ const getCoffeeById = async (req, res) => {
 };
 
 // Vote for coffee
-const voteCoffee = async (req, res) => {
+const voteCoffee = (req, res) => {
   try {
-    const coffee = await Coffee.findOneAndUpdate(
-      { id: Number(req.params.id) },
-      { $inc: { votes: 1 } },
-      { new: true }
+    const coffees = readCoffees();
+
+    const index = coffees.findIndex(
+      (item) => item.id === Number(req.params.id)
     );
 
-    if (!coffee) {
+    if (index === -1) {
       return res.status(404).json({
         message: "Coffee not found",
       });
     }
 
+    coffees[index].votes += 1;
+
+    writeCoffees(coffees);
+
     res.json({
       message: "Vote recorded successfully",
-      coffee,
+      coffee: coffees[index],
     });
   } catch (error) {
     res.status(500).json({
