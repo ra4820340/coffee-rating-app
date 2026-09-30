@@ -1,0 +1,104 @@
+.app {
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 38px;
+}
+
+.header p {
+  margin-top: 10px;
+  color: #666;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.filters input,
+.filters select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.filters input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.coffee-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.coffee-card {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.coffee-icon {
+  font-size: 40px;
+}
+
+.coffee-card h2 {
+  margin: 10px 0;
+}
+
+.rating {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.votes {
+  color: #666;
+}
+
+.coffee-card button {
+  width: 100%;
+  padding: 11px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.coffee-card button:hover {
+  opacity: 0.85;
+}
+
+.message {
+  text-align: center;
+  font-size: 20px;
+  padding: 50px;
+}
+
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 30px;
+  }
+
+  .container {
+    width: 94%;
+  }
+}
